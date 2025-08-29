@@ -176,8 +176,11 @@ class Main:
 def main():
     pg.init()
     algorithm, num_bars = show_config_menu()
-    simulation = Main(algorithm, num_bars)
-    simulation.run()
+    try:
+        simulation = Main(algorithm, num_bars)
+        simulation.run()
+    except:
+        pg.quit()
 
 if __name__ == '__main__':
     main()
