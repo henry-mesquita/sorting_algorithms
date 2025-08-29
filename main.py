@@ -179,7 +179,9 @@ def main():
     try:
         simulation = Main(algorithm, num_bars)
         simulation.run()
-    except:
+    except Exception as e:
+        print('Exeption: {e}')
+    finally:
         pg.quit()
 
 if __name__ == '__main__':
