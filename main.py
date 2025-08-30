@@ -63,33 +63,15 @@ class Main:
     def draw_bars(self, bar_1=None, bar_2=None):
         surface_width, surface_height, bw, gap, m = self.calculate_bars()
 
-        if self.algorithm == 'Bubble Sort':
-            if bar_1 is None:
-                for i in range(self.num_bars):
-                    x = m + i * (bw + gap)
-                    
-                    pg.draw.rect(self.bars_surface, WHITE,
-                                    (x, surface_height - self.sizes[i], bw, self.sizes[i]))
-            else:
-                for i in range(self.num_bars):
-                    x = m + i * (bw + gap)
+        for i in range(self.num_bars):
+            x = m + i * (bw + gap)
 
-                    if i in (bar_1, bar_1 + 1):                
-                        pg.draw.rect(self.bars_surface, GREEN,
-                                        (x, surface_height - self.sizes[i], bw, self.sizes[i]))
-                    else:
-                        pg.draw.rect(self.bars_surface, WHITE,
-                                    (x, surface_height - self.sizes[i], bw, self.sizes[i]))
-        elif self.algorithm in ['Quick Sort', 'Merge Sort', 'Insertion Sort']:
-            for i in range(self.num_bars):
-                x = m + i * (bw + gap)
-
-                if i in (bar_1, bar_2):
-                    pg.draw.rect(self.bars_surface, GREEN,
-                                    (x, surface_height - self.sizes[i], bw, self.sizes[i]))
-                else:
-                    pg.draw.rect(self.bars_surface, WHITE,
+            if i in (bar_1, bar_2):
+                pg.draw.rect(self.bars_surface, GREEN,
                                 (x, surface_height - self.sizes[i], bw, self.sizes[i]))
+            else:
+                pg.draw.rect(self.bars_surface, WHITE,
+                            (x, surface_height - self.sizes[i], bw, self.sizes[i]))
 
 
     def get_random_sizes(self):

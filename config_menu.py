@@ -61,7 +61,10 @@ def show_config_menu():
                     algorithm = dropdown_algorithm.selected_option[0]
                     num_bars = int(bars_slider.get_current_value())
                     running = False
+                    return algorithm, num_bars, True
                 if event.ui_element == quit_btn:
+                    algorithm = dropdown_algorithm.selected_option[0]
+                    num_bars = int(bars_slider.get_current_value())
                     running = False
                     return algorithm, num_bars, False
             manager.process_events(event)
@@ -70,5 +73,3 @@ def show_config_menu():
         config_screen.fill((40, 40, 40))
         manager.draw_ui(config_screen)
         pg.display.update()
-
-    return algorithm, num_bars, True
