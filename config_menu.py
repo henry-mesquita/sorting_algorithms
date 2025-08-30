@@ -17,7 +17,8 @@ def show_config_menu():
         options_list=[
             'Bubble Sort',
             'Quick Sort',
-            'Merge Sort'
+            'Merge Sort',
+            'Insertion Sort'
         ],
         starting_option='Bubble Sort',
         relative_rect=pg.Rect((300, 200), (200, 50)),
@@ -34,6 +35,12 @@ def show_config_menu():
     bars_label = pygame_gui.elements.UILabel(
         relative_rect=pg.Rect((200, 300), (120, 50)),
         text=f'Bars: {int(bars_slider.get_current_value())}',
+        manager=manager
+    )
+
+    quit_btn = pygame_gui.elements.UIButton(
+        relative_rect=pg.Rect((350, 400), (100, 50)),
+        text='Quit',
         manager=manager
     )
 
@@ -54,6 +61,9 @@ def show_config_menu():
                     algorithm = dropdown_algorithm.selected_option[0]
                     num_bars = int(bars_slider.get_current_value())
                     running = False
+                if event.ui_element == quit_btn:
+                    running = False
+                    return algorithm, num_bars, False
             manager.process_events(event)
 
         manager.update(FRAMERATE)
@@ -61,4 +71,4 @@ def show_config_menu():
         manager.draw_ui(config_screen)
         pg.display.update()
 
-    return algorithm, num_bars
+    return algorithm, num_bars, True
