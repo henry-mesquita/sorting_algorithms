@@ -26,8 +26,8 @@ def bubble_sort_gen(
 
 def quick_sort_gen(
     arr:            list[int],
-    left:           list[int],
-    right:          list[int],
+    left:           int,
+    right:          int,
     comparisons:    int,
     array_accesses: int
 ):
@@ -82,7 +82,7 @@ def merge_sort_gen(
 
     left_copy = arr[left:mid + 1]
     right_copy = arr[mid + 1:right + 1]
-    array_accesses += 2
+    array_accesses += len(left_copy) + len(right_copy)
 
     i = j = 0
     k = left
