@@ -2,7 +2,13 @@ import pygame as pg
 import pygame_gui
 from constants import *
 
-def show_config_menu():
+def show_config_menu() -> tuple[str, int, bool]:
+    """
+    Show the configuration menu for the game.
+
+    Returns:
+        tuple[str, int, bool]: A tuple containing the sorting algorithm, number of bars, and wether to run the simulation.
+    """
     WINDOW_SIZE = (800, 600)
     config_screen = pg.display.set_mode(WINDOW_SIZE)
     manager = pygame_gui.UIManager(WINDOW_SIZE)
@@ -61,12 +67,12 @@ def show_config_menu():
                     algorithm = dropdown_algorithm.selected_option[0]
                     num_bars = int(bars_slider.get_current_value())
                     running = False
-                    return algorithm, num_bars, True
+                    return (algorithm, num_bars, True)
                 if event.ui_element == quit_btn:
                     algorithm = dropdown_algorithm.selected_option[0]
                     num_bars = int(bars_slider.get_current_value())
                     running = False
-                    return algorithm, num_bars, False
+                    return (algorithm, num_bars, False)
             manager.process_events(event)
 
         manager.update(FRAMERATE)

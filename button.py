@@ -1,7 +1,29 @@
 import pygame as pg
 
 class Button:
-    def __init__(self, text, width, height, fontsize, pos, screen):
+    def __init__(
+            self,
+            text: str="Default Text",
+            width: int=200,
+            height: int=40,
+            fontsize: int=30,
+            pos: tuple[int, int]=(0, 0),
+            screen: pg.Surface=None
+        ) -> None:
+        """
+        Initialize the Button class.
+
+        Args:
+            text (str): The text to be displayed on the button. Default is "Default Text".
+            width (int): The width of the button. Default is 200.
+            height (int): The height of the button. Default is 40.
+            fontsize (int): The font size of the text. Default is 30.
+            pos (tuple[int, int]): The position of the button. Default is (0, 0).
+            screen (pg.Surface): The surface to draw the button on. Default is None.
+        Returns:
+            None
+        """
+        # Main Attributes
         self.screen = screen
         
         # Main Attributes
@@ -16,7 +38,15 @@ class Button:
         self.text_surf = self.font.render(text, True, '#FFFFFF')
         self.text_rect = self.text_surf.get_rect(center=self.top_rect.center)
     
-    def draw(self, sorting):
+    def draw(self, sorting: bool=False) -> None:
+        """
+        Draw the button on the screen.
+
+        Args:
+            sorting (bool): True if the button is active, False otherwise. Default is False.
+        Returns:
+            None
+        """
         if sorting:
             pg.draw.rect(self.screen, self.not_active_color, self.top_rect)
         else:
@@ -24,7 +54,13 @@ class Button:
 
         self.screen.blit(self.text_surf, self.text_rect)
     
-    def clicked(self):
+    def clicked(self) -> bool:
+        """
+        Check if the button has been clicked.
+
+        Returns:
+            bool: True if the button has been clicked, False otherwise.
+        """
         mouse_pos = pg.mouse.get_pos()
         mouse_pressed = pg.mouse.get_pressed()[0]
         if self.top_rect.collidepoint(mouse_pos):

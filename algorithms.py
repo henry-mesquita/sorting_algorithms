@@ -1,15 +1,47 @@
-def bubble_sort_gen(sizes, comparisons, array_accesses):
-    n = len(sizes)
+def bubble_sort_gen(
+    arr:                list[int],
+    comparisons:        int,
+    array_accesses:     int
+):
+    """
+    Generator for bubble sort algorithm.
+
+    Parameters:
+        sizes (list[int]): A list of numbers to be sorted.
+        comparisons (int): The number of comparisons made in the bubble sort algorithm.
+        array_accesses (int): The number of array accesses made in the bubble sort algorithm.
+
+    Yields:
+        tuple: A tuple containing the current state of the list and the index of the current element being compared.
+    """
+    n = len(arr)
     for i in range(n):
         for j in range(0, n - i - 1):
             comparisons += 1
             array_accesses += 2
-            if sizes[j] > sizes[j + 1]:
-                sizes[j], sizes[j + 1] = sizes[j + 1], sizes[j]
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
                 array_accesses += 4
-                yield j, j + 1, comparisons, array_accesses
+                yield (j, j + 1, comparisons, array_accesses)
 
-def quick_sort_gen(arr, left, right, comparisons, array_accesses):
+def quick_sort_gen(
+    arr:            list[int],
+    left:           list[int],
+    right:          list[int],
+    comparisons:    int,
+    array_accesses: int
+):
+    """
+    Generator for quick sort algorithm.
+
+    Parameters:
+        sizes (list[int]): A list of numbers to be sorted.
+        comparisons (int): The number of comparisons made in the quick sort algorithm.
+        array_accesses (int): The number of array accesses made in the quick sort algorithm.
+
+    Yields:
+        tuple: A tuple containing the current state of the list and the index of the current element being compared.
+    """
     if left >= right:
         return
     
@@ -24,7 +56,7 @@ def quick_sort_gen(arr, left, right, comparisons, array_accesses):
             arr[i], arr[j] = arr[j], arr[i]
             array_accesses += 4
             i += 1
-            yield j, i, comparisons, array_accesses
+            yield (j, i, comparisons, array_accesses)
 
     array_accesses += 4
     arr[i], arr[right] = arr[right], arr[i]
@@ -32,7 +64,13 @@ def quick_sort_gen(arr, left, right, comparisons, array_accesses):
     yield from quick_sort_gen(arr, left, i - 1, comparisons, array_accesses)
     yield from quick_sort_gen(arr, i + 1, right, comparisons, array_accesses)
 
-def merge_sort_gen(arr, left, right, comparisons, array_accesses):
+def merge_sort_gen(
+    arr:            list[int],
+    left:           list[int],
+    right:          list[int],
+    comparisons:    int,
+    array_accesses: int
+):
     comparisons += 1
     if left >= right:
         return
@@ -81,7 +119,11 @@ def merge_sort_gen(arr, left, right, comparisons, array_accesses):
         j += 1
         k += 1
 
-def insertion_sort_gen(arr, comparisons, array_accesses):
+def insertion_sort_gen(
+    arr:            list[int],
+    comparisons:    int,
+    array_accesses: int
+):
     for i in range(1, len(arr)):
         for j in range(i, 0, -1):
             comparisons += 1

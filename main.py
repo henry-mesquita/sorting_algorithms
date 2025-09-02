@@ -7,7 +7,20 @@ from config_menu import show_config_menu
 from algorithms import *
 
 class Main:
-    def __init__(self, algorithm, num_bars):
+    def __init__(
+            self,
+            algorithm: str="Bubble Sort",
+            num_bars: int=40
+        ) -> None:
+        """
+        Initialize the Main class.
+
+        Args:
+            algorithm (str): The sorting algorithm to be used. Default is "Bubble Sort".
+            num_bars (int): The number of bars to be sorted. Default is 40.
+        Returns:
+            None
+        """
         # MAIN CONFIG
         pg.display.set_caption('Sorting Algorithms')
         self.font = pg.font.Font(None, 20)
@@ -46,7 +59,13 @@ class Main:
         self.is_sorted = False
         self.array_accesses = 0
     
-    def calculate_bars(self):
+    def calculate_bars(self) -> tuple[int, int, float, float, int]:
+        """
+        Calculate the width and height of the bars.
+
+        Returns:
+            tuple: A tuple containing the width and height of the bars.
+        """
         surface_width = self.bars_surface.get_width()
         surface_height = self.bars_surface.get_height()
 
@@ -58,9 +77,19 @@ class Main:
         bw = available_width / (self.num_bars + (self.num_bars - 1) * k)
         gap = k * bw
 
-        return surface_width, surface_height, bw, gap, m
+        return (surface_width, surface_height, bw, gap, m)
     
-    def draw_bars(self, bar_1=None, bar_2=None):
+    def draw_bars(self, bar_1: int=None, bar_2: int=None) -> None:
+        """
+        Draw the bars on the bars surface.
+
+        Args:
+            bar_1 (int): The index of the first bar to be highlighted.
+            bar_2 (int): The index of the second bar to be highlighted.
+
+        Returns:
+            None
+        """
         surface_width, surface_height, bw, gap, m = self.calculate_bars()
 
         for i in range(self.num_bars):
@@ -74,7 +103,13 @@ class Main:
                             (x, surface_height - self.sizes[i], bw, self.sizes[i]))
 
 
-    def get_random_sizes(self):
+    def get_random_sizes(self) -> list[int]:
+        """
+        Generate a list of random sizes for the bars.
+
+        Returns:
+            list: A list of random sizes for the bars.
+        """
         max_value = self.bars_surface.get_height() - 60
         min_value = 30
         step = (max_value - min_value) // (self.num_bars - 1)
@@ -88,34 +123,63 @@ class Main:
 
         return sizes
 
-    def randomize_bars(self):
+    def randomize_bars(self) -> None:
+        """
+        Randomize the sizes of the bars.
+
+        Returns:
+            None
+        """
         self.sizes = self.get_random_sizes()
     
-    def draw_text(self, info, x=10, y=10):
+    def draw_text(self, info: str, x: int=10, y: int=10):
+        """
+        Draw text on the bars surface.
+
+        Args:
+            info (str): The text to be drawn.
+            x (int, optional): The x position of the text. Defaults to 10.
+            y (int, optional): The y position of the text. Defaults to 10.
+
+        Returns:
+            None
+        """
         debug_surface = self.font.render(str(info), True, 'Green')
         debug_rect = debug_surface.get_rect(topleft=(x, y))
         pg.draw.rect(self.bars_surface, 'Black', debug_rect)
         self.bars_surface.blit(debug_surface, debug_rect)
 
-    def event_loop(self):
+    def event_loop(self) -> None:
+        """
+        Returns:
+            None
+        """
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.running = False
     
-    def check_button_click(self):
+    def check_button_click(self) -> bool:
+        """
+        Check if a button has been clicked.
+
+        Returns:
+            bool: True if a button has been clicked, False otherwise.
+        """
         if self.sort_btn.clicked() and not self.sorting and not self.is_sorted:
             self.sorting = True
             self.comparisons = 0
             self.array_accesses = 0
             self.start_time = time()
-            if self.algorithm == 'Bubble Sort':
-                self.generator = bubble_sort_gen(self.sizes, self.comparisons, self.array_accesses)
-            elif self.algorithm == 'Quick Sort':
-                self.generator = quick_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
-            elif self.algorithm == 'Merge Sort':
-                self.generator = merge_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
-            elif self.algorithm == 'Insertion Sort':
-                self.generator = insertion_sort_gen(self.sizes, self.comparisons, self.array_accesses)
+
+            match self.algorithm:
+                case 'Bubble Sort':
+                    self.generator = bubble_sort_gen(self.sizes, self.comparisons, self.array_accesses)
+                case 'Quick Sort':
+                    self.generator = quick_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
+                case 'Merge Sort':
+                    self.generator = merge_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
+                case 'Insertion Sort':
+                    self.generator = insertion_sort_gen(self.sizes, self.comparisons, self.array_accesses)
 
         if self.randomize_btn.clicked() and not self.sorting:
             self.randomize_bars()
@@ -125,7 +189,13 @@ class Main:
         if self.return_btn.clicked() and not self.sorting:
             self.running = False
     
-    def check_sort(self):
+    def check_and_sort(self) -> bool:
+        """
+        Check if the bars are sorted and sort them if they are not.
+
+        Returns:
+            bool: True if the bars are sorted, False otherwise.
+        """
         if self.sorting:
             self.elapsed_time = self.start_time - time()
             self.draw_text(f'Elapsed Time: {abs(self.elapsed_time):.2f}', 10, 60)
@@ -142,7 +212,13 @@ class Main:
             self.draw_bars()
             self.draw_text(f'Elapsed Time: {abs(self.elapsed_time):.2f}', 10, 60)
     
-    def draw_everything(self):
+    def draw_everything(self) -> None:
+        """
+        Draw everything on the screen.
+
+        Returns:
+            None
+        """
         self.screen.fill(BLACK)
         self.screen.blit(self.bars_surface, (0, SURFACE_OFFSET))
         self.bars_surface.fill(BLACK)
@@ -156,12 +232,18 @@ class Main:
         self.draw_text(f'Comparisons: {self.comparisons}', 10, 80)
         self.draw_text(f'Array Accesses: {self.array_accesses}', 10, 100)
 
-    def run(self):
+    def run(self) -> None:
+        """
+        Run the simulation (game loop).
+
+        Returns:
+            None
+        """
         self.running = True
         while self.running:
             self.event_loop()
             self.check_button_click()
-            self.check_sort()
+            self.check_and_sort()
             self.draw_everything()
 
             pg.display.update()
