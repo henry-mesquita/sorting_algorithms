@@ -6,14 +6,14 @@ from time import time
 from config_menu import show_config_menu
 from algorithms import *
 
-class Main:
+class Simulation:
     def __init__(
             self,
             algorithm: str="Bubble Sort",
             num_bars: int=40
         ) -> None:
         """
-        Initialize the Main class.
+        Initialize the Simulation class.
 
         Args:
             algorithm (str): The sorting algorithm to be used. Default is "Bubble Sort".
@@ -96,7 +96,7 @@ class Main:
             x = m + i * (bw + gap)
 
             if i in (bar_1, bar_2):
-                pg.draw.rect(self.bars_surface, GREEN,
+                pg.draw.rect(self.bars_surface, DARK_PURPLE,
                                 (x, surface_height - self.sizes[i], bw, self.sizes[i]))
             else:
                 pg.draw.rect(self.bars_surface, WHITE,
@@ -144,7 +144,7 @@ class Main:
         Returns:
             None
         """
-        debug_surface = self.font.render(str(info), True, 'Green')
+        debug_surface = self.font.render(str(info), True, DARK_PURPLE)
         debug_rect = debug_surface.get_rect(topleft=(x, y))
         pg.draw.rect(self.bars_surface, 'Black', debug_rect)
         self.bars_surface.blit(debug_surface, debug_rect)
@@ -256,7 +256,7 @@ def main():
         try:
             algorithm, num_bars, game_running = show_config_menu()
             if game_running == True:
-                simulation = Main(algorithm, num_bars)
+                simulation = Simulation(algorithm, num_bars)
                 simulation.run()
             else:
                 break
