@@ -53,11 +53,14 @@ class Simulation:
 
         self.generator = None
         self.sorting = False
-        self.comparisons = 0
         self.elapsed_time = 0
         self.start_time = 0
         self.is_sorted = False
-        self.array_accesses = 0
+
+        self.counts = {
+            'comparisons': 0,
+            'array_accesses': 0
+        }
     
     def calculate_bars(self) -> tuple[int, int, float, float, int]:
         """
@@ -173,13 +176,13 @@ class Simulation:
 
             match self.algorithm:
                 case 'Bubble Sort':
-                    self.generator = bubble_sort_gen(self.sizes, self.comparisons, self.array_accesses)
+                    self.generator = bubble_sort_gen(self.sizes, self.counts)
                 case 'Quick Sort':
-                    self.generator = quick_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
+                    self.generator = quick_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.counts)
                 case 'Merge Sort':
-                    self.generator = merge_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.comparisons, self.array_accesses)
+                    self.generator = merge_sort_gen(self.sizes, 0, len(self.sizes) - 1, self.counts)
                 case 'Insertion Sort':
-                    self.generator = insertion_sort_gen(self.sizes, self.comparisons, self.array_accesses)
+                    self.generator = insertion_sort_gen(self.sizes, self.counts)
 
         if self.randomize_btn.clicked() and not self.sorting:
             self.randomize_bars()
@@ -200,7 +203,9 @@ class Simulation:
             self.elapsed_time = self.start_time - time()
             self.draw_text(f'Elapsed Time: {abs(self.elapsed_time):.2f}', 10, 60)
             try:
-                i, j, self.comparisons, self.array_accesses = next(self.generator)
+                i, j, comparisons, array_accesses = next(self.generator)
+                self.comparisons += comparisons
+                self.array_accesses += array_accesses
                 self.draw_bars(i, j)
             except StopIteration:
                 self.sorting = False
@@ -229,8 +234,8 @@ class Simulation:
 
         self.draw_text(f'Algorithm: {self.algorithm}', 10, 20)
         self.draw_text(f'Number of Bars: {self.num_bars}', 10, 40)
-        self.draw_text(f'Comparisons: {self.comparisons}', 10, 80)
-        self.draw_text(f'Array Accesses: {self.array_accesses}', 10, 100)
+        self.draw_text(f'Comparisons: {self.counts["comparisons"]}', 10, 80)
+        self.draw_text(f'Array Accesses: {self.counts["array_accesses"]}', 10, 100)
 
     def run(self) -> None:
         """
