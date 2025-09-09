@@ -170,8 +170,8 @@ class Simulation:
         """
         if self.sort_btn.clicked() and not self.sorting and not self.is_sorted:
             self.sorting = True
-            self.comparisons = 0
-            self.array_accesses = 0
+            self.counts['comparisons'] = 0
+            self.counts['array_accesses'] = 0
             self.start_time = time()
 
             match self.algorithm:
