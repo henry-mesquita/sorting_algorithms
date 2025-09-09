@@ -204,8 +204,8 @@ class Simulation:
             self.draw_text(f'Elapsed Time: {abs(self.elapsed_time):.2f}', 10, 60)
             try:
                 i, j, comparisons, array_accesses = next(self.generator)
-                self.comparisons += comparisons
-                self.array_accesses += array_accesses
+                self.counts['comparisons'] = comparisons
+                self.counts['array_accesses'] = array_accesses
                 self.draw_bars(i, j)
             except StopIteration:
                 self.sorting = False
