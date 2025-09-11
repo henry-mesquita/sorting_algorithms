@@ -63,5 +63,5 @@ pip install -r requirements.txt
 python main.py # or the name of your main script
 ```
 
-## Autor
+## Author
 Developed by **Henry Mesquita**.
