@@ -4,7 +4,7 @@
 
 <br>
 
-![Sorting Algorithms Visualizer GIF](visualizacoes/sorting_bars.gif)
+![Sorting Algorithms Visualizer GIF](viz/sorting_bars.gif)
 
 ---
 
