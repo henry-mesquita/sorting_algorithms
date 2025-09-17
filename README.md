@@ -19,9 +19,7 @@ The application generates a random array of values and allows the user to select
 ## Features
 
 - **Real-Time Visualization:** Watch every swap and comparison the algorithm makes.
-- **Multiple Algorithms:** Implementation of several classic sorting algorithms for comparison.
-- **Interactive Controls:** (If you have them) Pause, reset, and adjust the visualization speed.
-- **Data Generation:** Create new random datasets with a single click.
+- **Multiple Algorithms:** Implementation of several classic sorting algorithms for comparison (in process).
 
 ---
 
@@ -31,15 +29,14 @@ The application generates a random array of values and allows the user to select
 - Insertion Sort
 - Merge Sort
 - Quick Sort
-- *(Add or remove algorithms as needed)*
+- More will be implemented in the future.
 
 ---
 
 ## Technologies Used
 
 - **Language:** Python
-- **Graphics Library:** Pygame
-- **Standard Library:** time
+- **Graphics Library:** pygame, pygame-gui
 
 ---
 
