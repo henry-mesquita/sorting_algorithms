@@ -4,7 +4,7 @@
 
 <br>
 
-![Sorting Algorithms Visualizer GIF](viz/sorting_bars.gif)
+<img src="viz/sorting_bars.gif" alt="GIF of Snake Game Simulation" width="600"/>
 
 ---
 
