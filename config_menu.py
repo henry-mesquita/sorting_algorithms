@@ -1,5 +1,6 @@
 import pygame as pg
-import pygame_gui
+from pygame_gui.elements import *
+from pygame_gui import *
 from constants import *
 
 def show_config_menu() -> tuple[str, int, bool]:
@@ -9,17 +10,29 @@ def show_config_menu() -> tuple[str, int, bool]:
     Returns:
         tuple[str, int, bool]: A tuple containing the sorting algorithm, number of bars, and wether to run the simulation.
     """
-    WINDOW_SIZE = (800, 600)
-    config_screen = pg.display.set_mode(WINDOW_SIZE)
-    manager = pygame_gui.UIManager(WINDOW_SIZE)
+    WINDOW_SIZE: tuple[int, int] = (SCREEN_WIDTH, SCREEN_HEIGHT)
+    config_screen: pg.Surface = pg.display.set_mode(WINDOW_SIZE)
+    manager: UIManager = UIManager(WINDOW_SIZE)
 
-    start_btn = pygame_gui.elements.UIButton(
-        relative_rect=pg.Rect((350, 100), (100, 50)),
+    width_start_btn: int = 100
+    height_start_btn: int = 50
+
+    x_start_btn: int = int((SCREEN_WIDTH // 2) - (width_start_btn // 2))
+    y_start_btn: int = int(SCREEN_HEIGHT * 0.2)
+
+    start_btn: UIButton = UIButton(
+        relative_rect=pg.Rect((x_start_btn, y_start_btn), (width_start_btn, height_start_btn)),
         text='Start',
         manager=manager
     )
 
-    dropdown_algorithm = pygame_gui.elements.UIDropDownMenu(
+    width_dropdown: int = 200
+    height_dropdown: int = 50
+    
+    x_dropdown: int = int((SCREEN_WIDTH // 2) - (width_dropdown // 2))
+    y_dropdown: int = int(SCREEN_HEIGHT * 0.4)
+
+    dropdown_algorithm: UIDropDownMenu = UIDropDownMenu(
         options_list=[
             'Bubble Sort',
             'Quick Sort',
@@ -27,42 +40,61 @@ def show_config_menu() -> tuple[str, int, bool]:
             'Insertion Sort'
         ],
         starting_option='Bubble Sort',
-        relative_rect=pg.Rect((300, 200), (200, 50)),
+        relative_rect=pg.Rect((x_dropdown, y_dropdown), (width_dropdown, height_dropdown)),
         manager=manager
     )
 
-    bars_slider = pygame_gui.elements.UIHorizontalSlider(
-        relative_rect=pg.Rect((300, 300), (200, 50)),
+    width_bars_slider: int = 200
+    height_bars_slider: int = 50
+    
+    x_bars_slider: int = int((SCREEN_WIDTH // 2) - (width_bars_slider // 2))
+    y_bars_slider: int = int(SCREEN_HEIGHT * 0.6)
+
+    bars_slider: UIHorizontalSlider = UIHorizontalSlider(
+        relative_rect=pg.Rect((x_bars_slider, y_bars_slider), (width_bars_slider, height_bars_slider)),
         start_value=40,
         value_range=(40, 400),
         manager=manager
     )
 
-    bars_label = pygame_gui.elements.UILabel(
-        relative_rect=pg.Rect((200, 300), (120, 50)),
+    width_bars_label: int = 200
+    height_bars_label: int = 50
+    offset_bars_label: int = 135
+    
+    x_bars_label: int = int((SCREEN_WIDTH // 2) - (width_bars_label // 2) - offset_bars_label)
+    y_bars_label: int = int(SCREEN_HEIGHT * 0.6)
+
+    bars_label: UILabel = UILabel(
+        relative_rect=pg.Rect((x_bars_label, y_bars_label), (width_bars_label, height_bars_label)),
         text=f'Bars: {int(bars_slider.get_current_value())}',
         manager=manager
     )
 
-    quit_btn = pygame_gui.elements.UIButton(
-        relative_rect=pg.Rect((350, 400), (100, 50)),
+    width_quit_btn: int = 100
+    height_quit_btn: int = 50
+    
+    x_quit_btn: int = int((SCREEN_WIDTH // 2) - (width_quit_btn // 2))
+    y_quit_btn: int = int(SCREEN_HEIGHT * 0.8)
+
+    quit_btn: UIButton = UIButton(
+        relative_rect=pg.Rect((x_quit_btn, y_quit_btn), (width_quit_btn, height_quit_btn)),
         text='Quit',
         manager=manager
     )
 
-    running = True
-    num_bars = 20
+    running: bool = True
+    num_bars: int = 20
 
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
 
-            if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
+            if event.type == UI_HORIZONTAL_SLIDER_MOVED:
                 if event.ui_element == bars_slider:
                     bars_label.set_text(f'Bars: {int(bars_slider.get_current_value())}')
 
-            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+            if event.type == UI_BUTTON_PRESSED:
                 if event.ui_element == start_btn:
                     algorithm = dropdown_algorithm.selected_option[0]
                     num_bars = int(bars_slider.get_current_value())

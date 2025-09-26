@@ -23,41 +23,41 @@ class Simulation:
         """
         # MAIN CONFIG
         pg.display.set_caption('Sorting Algorithms')
-        self.font = pg.font.Font(None, 20)
-        self.num_bars = num_bars
-        self.algorithm = algorithm
+        self.font: pg.font.Font = pg.font.Font(None, 20)
+        self.num_bars: int = num_bars
+        self.algorithm: str = algorithm
 
         # MAIN SURFACE
-        self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.clock = pg.time.Clock()
+        self.screen: pg.Surface = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.clock: pg.time.Clock = pg.time.Clock()
 
         # BARS SURFACE
-        self.bars_surface = pg.Surface((SCREEN_WIDTH, SCREEN_HEIGHT - SURFACE_OFFSET))
-        self.sizes = self.get_random_sizes()
-        self.sort_btn = Button(text='Sort Bars',
+        self.bars_surface: pg.Surface = pg.Surface((SCREEN_WIDTH, SCREEN_HEIGHT - SURFACE_OFFSET))
+        self.sizes: list[int] = self.get_random_sizes()
+        self.sort_btn: Button = Button(text='Sort Bars',
                                width=200, height=40,
                                pos=(SCREEN_WIDTH // 4, 25),
                                fontsize=30,
                                screen=self.screen)
-        self.randomize_btn = Button(text='Randomize Bars',
+        self.randomize_btn: Button = Button(text='Randomize Bars',
                                     width=200, height=40,
                                     pos=(SCREEN_WIDTH - SCREEN_WIDTH // 4, 25),
                                     fontsize=30,
                                     screen=self.screen)
         
-        self.return_btn = Button(text='Return to Menu',
+        self.return_btn: Button = Button(text='Return to Menu',
                                  width=200, height=40,
                                  pos=(SCREEN_WIDTH // 2, 25),
                                  fontsize=30,
                                  screen=self.screen)
 
         self.generator = None
-        self.sorting = False
-        self.elapsed_time = 0
-        self.start_time = 0
-        self.is_sorted = False
+        self.sorting: bool = False
+        self.elapsed_time: float = 0
+        self.start_time: float = 0
+        self.is_sorted: bool = False
 
-        self.counts = {
+        self.counts: dict = {
             'comparisons': 0,
             'array_accesses': 0
         }
@@ -69,8 +69,8 @@ class Simulation:
         Returns:
             tuple: A tuple containing the width and height of the bars.
         """
-        surface_width = self.bars_surface.get_width()
-        surface_height = self.bars_surface.get_height()
+        surface_width: int = self.bars_surface.get_width()
+        surface_height: int = self.bars_surface.get_height()
 
         m = 20
         k = 0.5
@@ -256,12 +256,12 @@ class Simulation:
 
 def main():
     pg.init()
-    game_running = True
+    game_running: bool = True
     while game_running:
         try:
             algorithm, num_bars, game_running = show_config_menu()
             if game_running == True:
-                simulation = Simulation(algorithm, num_bars)
+                simulation: Simulation = Simulation(algorithm, num_bars)
                 simulation.run()
             else:
                 break

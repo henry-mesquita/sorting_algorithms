@@ -24,16 +24,16 @@ class Button:
             None
         """
         # Main Attributes
-        self.screen = screen
+        self.screen: pg.Surface = screen
         
         # Main Attributes
-        self.pressed = False
-        self.font = pg.font.Font(None, fontsize)
+        self.pressed: bool = False
+        self.font: pg.font.Font = pg.font.Font(None, fontsize)
         # Top rectangle
-        self.top_rect = pg.Rect((0, 0), (width, height))
+        self.top_rect: pg.Rect = pg.Rect((0, 0), (width, height))
         self.top_rect.center = pos
-        self.active_color = "#1AEC07"
-        self.not_active_color = "#AF1B22FF"
+        self.active_color: str = "#1AEC07"
+        self.not_active_color: str = "#AF1B22FF"
         # Text
         self.text_surf = self.font.render(text, True, '#FFFFFF')
         self.text_rect = self.text_surf.get_rect(center=self.top_rect.center)
@@ -61,8 +61,8 @@ class Button:
         Returns:
             bool: True if the button has been clicked, False otherwise.
         """
-        mouse_pos = pg.mouse.get_pos()
-        mouse_pressed = pg.mouse.get_pressed()[0]
+        mouse_pos: tuple[int, int] = pg.mouse.get_pos()
+        mouse_pressed: tuple[bool, bool, bool] = pg.mouse.get_pressed()[0]
         if self.top_rect.collidepoint(mouse_pos):
             if mouse_pressed:
                 self.pressed = True
